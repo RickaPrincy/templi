@@ -36,7 +36,7 @@ void Templi::JSONConfig::read_config(String template_path)
 
 	try
 	{
-        _ignored_paths = config_json["ignored_paths"];
+		_ignored_paths = config_json["ignored_paths"];
 		if (config_json["scripts"].is_object())
 		{
 			json scripts = config_json["scripts"];
@@ -77,13 +77,14 @@ void Templi::JSONConfig::save_config(String template_path)
 	json keys_json = json::array();
 
 	new_config_json["ignored_paths"] = _ignored_paths;
-    
-    if(!_before.empty() || !_after.empty()){
-        json scripts = json::object();
-        scripts["before"] = _before;
-        scripts["after"] = _before;
-        new_config_json["scripts"] = scripts;
-    }
+
+	if (!_before.empty() || !_after.empty())
+	{
+		json scripts = json::object();
+		scripts["before"] = _before;
+		scripts["after"] = _before;
+		new_config_json["scripts"] = scripts;
+	}
 
 	for (auto key : _keys)
 	{

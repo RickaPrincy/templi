@@ -25,7 +25,8 @@ namespace Templi
 
 	class Exception : public std::exception
 	{
-	private: String _message;
+	private:
+		String _message;
 
 	public:
 		Exception(String message) : _message(message)
@@ -53,7 +54,7 @@ namespace Templi
 		VectorString _choices{};
 		bool _required{ false }, _clean{ true };
 
-		Key(){};
+		Key() = default;
 
 		static KeyType keytype_value_of(String type);
 		static String keytype_to_string(KeyType type);

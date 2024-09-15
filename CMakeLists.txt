@@ -50,25 +50,34 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 if(TEMPLI_IS_MAIN_PROJECT)
-  configure_file(${TEMPLI_SOURCE_DIR}/PKGBUILD/cli/PKGBUILD.in
+  configure_file(${TEMPLI_SOURCE_DIR}/.templates/PKGBUILD/cli/PKGBUILD.in
                  ${TEMPLI_SOURCE_DIR}/PKGBUILD/cli/PKGBUILD @ONLY)
 
-  configure_file(${TEMPLI_SOURCE_DIR}/PKGBUILD/lib/PKGBUILD.in
+  configure_file(${TEMPLI_SOURCE_DIR}/.templates/PKGBUILD/lib/PKGBUILD.in
                  ${TEMPLI_SOURCE_DIR}/PKGBUILD/lib/PKGBUILD @ONLY)
 
-  configure_file(${TEMPLI_SOURCE_DIR}/release_config/create_release.sh
-                 ${TEMPLI_SOURCE_DIR}/create_release.sh @ONLY)
+  configure_file(${TEMPLI_SOURCE_DIR}/.templates/create-release.sh
+                 ${TEMPLI_SOURCE_DIR}/scripts/create-release.sh @ONLY)
 
   configure_file(
-    ${TEMPLI_SOURCE_DIR}/${TEMPLI_LIB_NAME}CliConfig.hpp.in
+    ${TEMPLI_SOURCE_DIR}/.templates/${TEMPLI_LIB_NAME}CliConfig.hpp.in
     ${TEMPLI_SOURCE_DIR}/include/${TEMPLI_LIB_NAME}/${TEMPLI_LIB_NAME}Config.hpp
     @ONLY)
 endif()
 
-add_subdirectory(src)
+add_subdirectory(sources)
 
 # Test configuration
 if(TEMPLI_TEST)
+  execute_process(
+    COMMAND git --version
+    RESULT_VARIABLE GIT_RESULT
+    OUTPUT_QUIET)
+
+  if(NOT GIT_RESULT EQUAL 0)
+    message(FATAL_ERROR "git is required")
+  endif()
+
   set(SUBMODULES external/googletest)
   find_package(Git REQUIRED)
 
@@ -90,20 +99,13 @@ if(TEMPLI_TEST)
   add_subdirectory(tests)
 endif()
 
-execute_process(
-  COMMAND git --version
-  RESULT_VARIABLE GIT_RESULT
-  OUTPUT_QUIET)
-
-if(NOT GIT_RESULT EQUAL 0)
-  message(FATAL_ERROR "git is required")
-endif()
-
 # clang-format configuration
 find_program(CLANG_FORMAT_EXECUTABLE NAMES clang-format)
 if(CLANG_FORMAT_EXECUTABLE)
-  file(GLOB_RECURSE ALL_SOURCE_FILES "${TEMPLI_SOURCE_DIR}/src/lib/*.cpp"
-       "${TEMPLI_SOURCE_DIR}/src/cli/*.cpp"
+  file(GLOB_RECURSE ALL_SOURCE_FILES "${TEMPLI_SOURCE_DIR}/sources/lib/*.cpp"
+       "${TEMPLI_SOURCE_DIR}/sources/lib/*.hpp"
+       "${TEMPLI_SOURCE_DIR}/sources/cli/*.cpp"
+       "${TEMPLI_SOURCE_DIR}/sources/cli/*.hpp"
        "${TEMPLI_SOURCE_DIR}/include/Templi/*.hpp")
   add_custom_target(
     clang-format

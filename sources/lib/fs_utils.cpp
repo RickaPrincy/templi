@@ -101,8 +101,8 @@ void Templi::delete_folder(String path)
 	{
 		return;
 	}
-	
-    try
+
+	try
 	{
 		fs::remove_all(path);
 	}

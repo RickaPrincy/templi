@@ -1,4 +1,4 @@
-name: CI linux
+name: ci
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -23,3 +23,24 @@ jobs:
     
     - name: Test
       run: cd build; make; ./bin/TempliTest  
+
+  style:
+    runs-on: ubuntu-latest
+    name: check style 
+    strategy:
+      matrix:
+        path:
+          - 'sources'
+          - 'include'
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: install rcli 
+      run: bash <(curl -s https://raw.githubusercontent.com/RickaPrincy/rcli/main/install.sh)
+
+    - name: Run clang-format
+      uses: jidicula/clang-format-action@v4.13.0
+      with:
+        clang-format-version: '18'
+        check-path: ${{ matrix.path }}
+        fallback-style: 'Mozilla'

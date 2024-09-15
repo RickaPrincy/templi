@@ -13,7 +13,7 @@ namespace Templi
 	void save_file(String path, String text);
 	void save_file(String path, nlohmann::json text);
 	void delete_file(String path);
-    void delete_folder(String path);
+	void delete_folder(String path);
 
 	void copy_folder(String source, String destination);
 	void get_folder_files(String path, VectorString &result, VectorString exclude_path = {});

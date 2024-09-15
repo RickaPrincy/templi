@@ -1,4 +1,7 @@
-project(${TEMPLI_LIB_NAME} VERSION 1.0.0 LANGUAGES CXX)
+project(
+  ${TEMPLI_LIB_NAME}
+  VERSION 1.0.0
+  LANGUAGES CXX)
 
 set(LIB_SOURCES fs_utils.cpp json_config.cpp parser.cpp templi.cpp types.cpp
                 utils.cpp)

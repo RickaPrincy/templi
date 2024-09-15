@@ -7,7 +7,7 @@ add_executable(${TEMPLI_TEST_NAME} ${TEST_SOURCES})
 target_include_directories(
   ${TEMPLI_TEST_NAME}
   PRIVATE "${TEMPLI_SOURCE_DIR}/include"
-  PRIVATE "${TEMPLI_SOURCE_DIR}/src/lib"
+  PRIVATE "${TEMPLI_SOURCE_DIR}/sources/lib"
   PRIVATE "${TEMPLI_SOURCE_DIR}/external/googletest/include")
 
 target_link_directories(${TEMPLI_TEST_NAME} PUBLIC ${CMAKE_BINARY_DIR}/lib)

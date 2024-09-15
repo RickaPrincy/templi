@@ -90,7 +90,7 @@ void Templi::generate_with_templi_config(String template_path,
 	{
 		Templi::ask_and_get_templi_config_value(
 			json_template_path, values, ignored_paths, before_generating, after_generating);
-        Templi::execute_scripts(values, before_generating);
+		Templi::execute_scripts(values, before_generating);
 		Templi::generate(json_template_path, output_path, values, ignored_paths);
 		Templi::execute_scripts(values, after_generating);
 	}
@@ -100,7 +100,7 @@ void Templi::generate_with_templi_config(String template_path,
 		{
 			Templi::delete_folder(template_path);
 		}
-        String message = error.what();
+		String message = error.what();
 		throw Templi::Exception(message);
 	}
 
